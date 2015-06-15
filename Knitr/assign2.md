@@ -9,11 +9,7 @@ output:
 ---
 <!-- YAML header to specify document properties -->
 
-```{r global_options, include=FALSE}
-#### global options to suppress warnings and messages in final document.
-#### They are still visible in the compilation log in R
-knitr::opts_chunk$set(message = FALSE, warning=FALSE)
-```
+
 
 ## Individual Effort
 1. Implement your own Least Squares classify  
@@ -28,7 +24,8 @@ knitr::opts_chunk$set(message = FALSE, warning=FALSE)
 
 ## Global Code
 ###$sin(x)$
-```{r}
+
+```r
 run.sinx <- function(BLS_Flag = TRUE, k = 1, ...){
     set.seed(100)
     x <- runif(100, 0, 2*pi)
@@ -51,7 +48,8 @@ run.sinx <- function(BLS_Flag = TRUE, k = 1, ...){
 }
 ```
 ### Classifier
-```{r}
+
+```r
 x <- read.table("dat_2.txt", FALSE)
 y <- x[,3]
 x <- x[,-3]
@@ -85,24 +83,32 @@ run.classify <- function(BLS_Flag = TRUE, k = 1, ...){
 ### 1. Implement LSR
 complete the `bls` function:
 
-```{r}
+
+```r
 bls <- function(x0,x,y){
     x0 %*% (solve(t(x) %*% x) %*% t(x) %*% y)
 }
 ```
 
 #### a. Apply it to the $sin(x)$ example
-```{r}
+
+```r
 run.sinx(BLS_Flag = TRUE)
 ```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 #### b. Apply it to the classification example
-```{r}
+
+```r
 run.classify(BLS_Flag = TRUE)
 ```
 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+
 ### 2. Implement KNN
 Complete the `knn` function
-```{r}
+
+```r
 knn <- function(x0, x, y, k){
     dis <- apply(as.matrix(x), 1, function(r) sum((x0 - r)^2))
     mean(y[head(order(dis), k)])
@@ -110,10 +116,16 @@ knn <- function(x0, x, y, k){
 ```
 
 #### a. Apply it to the $sin(x)$ example
-```{r}
+
+```r
 run.sinx(BLS_Flag = FALSE, k = 5)
 ```
+
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 #### b. Apply it to the classification example
-```{r}
+
+```r
 run.classify(BLS_Flag = FALSE, k = 5)
 ```
+
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
