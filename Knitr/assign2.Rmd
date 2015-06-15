@@ -11,8 +11,18 @@ output:
 
 ```{r global_options, include=FALSE}
 #### global options to suppress warnings and messages in final document.
-#### They are still visible in the compilation log in R
-knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+#### They are still visible in the compilation log in R.
+
+#### Each of these options can also be set per-chunk, i.e.,
+#### ```{r, fig.width = 5} 
+#### ... 
+####```
+knitr::opts_chunk$set(message = FALSE, ## supress general messages
+                      warning = FALSE, ## supress warnings
+                      fig.height = 6, fig.width = 6, ## set figure size (inches)
+                      cache = TRUE ## cache code so compilation is faster
+                                   ## only runs if chunk is modified
+                      )
 ```
 
 ## Individual Effort
@@ -82,7 +92,7 @@ run.classify <- function(BLS_Flag = TRUE, k = 1, ...){
 ```
 
 
-### 1. Implement LSR
+## 1. Implement LSR
 complete the `bls` function:
 
 ```{r}
@@ -91,16 +101,17 @@ bls <- function(x0,x,y){
 }
 ```
 
-#### a. Apply it to the $sin(x)$ example
+### a. Apply it to the $sin(x)$ example
 ```{r}
 run.sinx(BLS_Flag = TRUE)
 ```
-#### b. Apply it to the classification example
+
+### b. Apply it to the classification example
 ```{r}
 run.classify(BLS_Flag = TRUE)
 ```
 
-### 2. Implement KNN
+## 2. Implement KNN
 Complete the `knn` function
 ```{r}
 knn <- function(x0, x, y, k){
@@ -109,11 +120,12 @@ knn <- function(x0, x, y, k){
 }
 ```
 
-#### a. Apply it to the $sin(x)$ example
+### a. Apply it to the $sin(x)$ example
 ```{r}
 run.sinx(BLS_Flag = FALSE, k = 5)
 ```
-#### b. Apply it to the classification example
+
+### b. Apply it to the classification example
 ```{r}
 run.classify(BLS_Flag = FALSE, k = 5)
 ```
