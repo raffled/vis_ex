@@ -1,12 +1,5 @@
----
-title: "Assignment 2"
-subtitle: "KNN"
-author: "Doug Raffle"
-output:
-  html_document:
-    keep_md: yes
-    toc: true
----
+# Assignment 2
+Doug Raffle  
 <!-- YAML header to specify document properties -->
 
 
@@ -80,7 +73,7 @@ run.classify <- function(BLS_Flag = TRUE, k = 1, ...){
 ```
 
 
-### 1. Implement LSR
+## 1. Implement LSR
 complete the `bls` function:
 
 
@@ -90,22 +83,23 @@ bls <- function(x0,x,y){
 }
 ```
 
-#### a. Apply it to the $sin(x)$ example
+### a. Apply it to the $sin(x)$ example
 
 ```r
 run.sinx(BLS_Flag = TRUE)
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
-#### b. Apply it to the classification example
+![](assign2_files/figure-html/unnamed-chunk-4-1.png) 
+
+### b. Apply it to the classification example
 
 ```r
 run.classify(BLS_Flag = TRUE)
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![](assign2_files/figure-html/unnamed-chunk-5-1.png) 
 
-### 2. Implement KNN
+## 2. Implement KNN
 Complete the `knn` function
 
 ```r
@@ -115,17 +109,18 @@ knn <- function(x0, x, y, k){
 }
 ```
 
-#### a. Apply it to the $sin(x)$ example
+### a. Apply it to the $sin(x)$ example
 
 ```r
 run.sinx(BLS_Flag = FALSE, k = 5)
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
-#### b. Apply it to the classification example
+![](assign2_files/figure-html/unnamed-chunk-7-1.png) 
+
+### b. Apply it to the classification example
 
 ```r
 run.classify(BLS_Flag = FALSE, k = 5)
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
+![](assign2_files/figure-html/unnamed-chunk-8-1.png) 
