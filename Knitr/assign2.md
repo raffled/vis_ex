@@ -69,7 +69,8 @@ run.classify <- function(BLS_Flag = TRUE, k = 1, ...){
 	val<-as.numeric(zgrid[,i] >= 0.5) + 1
 	points(xgrid1,rep(xgrid2[i],n), pch = ".", col = c("orange", "blue")[val])
     })
-    contour(x = xgrid1, y = xgrid2, z = zgrid, levels = 0.5, add = TRUE, drawlabels = FALSE)
+    contour(x = xgrid1, y = xgrid2, z = zgrid, levels = 0.5, add = TRUE, 
+            drawlabels = FALSE)
 }
 ```
 
