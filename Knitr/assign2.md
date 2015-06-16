@@ -5,12 +5,13 @@ Doug Raffle
 
 
 ## Individual Effort
-1. Implement your own Least Squares classify  
-   a. Apply it to the $sin(x)$ regression example below.  
-   b. Apply it to the simulated classification example.  
-2. Implement your own k-NN function  
-   a. Apply it to the $sin(x)$ regression example below.  
-   b. Apply it to the simulated classification example.  
+
+1. Implement your own Least Squares classifier
+    a. Apply it to the $sin(x)$ regression example below.
+    b. Apply it to the simulated classification example.
+2. Implement your own k-NN function
+    a. Apply it to the $sin(x)$ regression example below.
+    b. Apply it to the simulated classification example.
 
 <!-- Each of the code chunks can be left empty, students can fill in -->
 <!-- their solutions in the document -->

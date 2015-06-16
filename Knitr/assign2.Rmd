@@ -1,11 +1,13 @@
 ---
 title: "Assignment 2"
-subtitle: "KNN"
 author: "Doug Raffle"
+subtitle: KNN
 output:
+  pdf_document:
+    toc: yes
   html_document:
     keep_md: yes
-    toc: true
+    toc: yes
 ---
 <!-- YAML header to specify document properties -->
 
@@ -19,19 +21,20 @@ output:
 ####```
 knitr::opts_chunk$set(message = FALSE, ## supress general messages
                       warning = FALSE, ## supress warnings
-                      fig.height = 6, fig.width = 6, ## set figure size (inches)
+                      fig.height = 5, fig.width = 5, ## set figure size (inches)
                       cache = TRUE ## cache code so compilation is faster
                                    ## only runs if chunk is modified
                       )
 ```
 
 ## Individual Effort
-1. Implement your own Least Squares classify  
-   a. Apply it to the $sin(x)$ regression example below.  
-   b. Apply it to the simulated classification example.  
-2. Implement your own k-NN function  
-   a. Apply it to the $sin(x)$ regression example below.  
-   b. Apply it to the simulated classification example.  
+
+1. Implement your own Least Squares classifier
+    a. Apply it to the $sin(x)$ regression example below.
+    b. Apply it to the simulated classification example.
+2. Implement your own k-NN function
+    a. Apply it to the $sin(x)$ regression example below.
+    b. Apply it to the simulated classification example.
 
 <!-- Each of the code chunks can be left empty, students can fill in -->
 <!-- their solutions in the document -->
@@ -87,7 +90,8 @@ run.classify <- function(BLS_Flag = TRUE, k = 1, ...){
 	val<-as.numeric(zgrid[,i] >= 0.5) + 1
 	points(xgrid1,rep(xgrid2[i],n), pch = ".", col = c("orange", "blue")[val])
     })
-    contour(x = xgrid1, y = xgrid2, z = zgrid, levels = 0.5, add = TRUE, drawlabels = FALSE)
+    contour(x = xgrid1, y = xgrid2, z = zgrid, levels = 0.5, add = TRUE, 
+            drawlabels = FALSE)
 }
 ```
 
