@@ -25,14 +25,13 @@ dashboardPage(
                     fluidRow(
                         box(title = "sin(x) Plot",
                             width = 6, ## in columns
-                            height = 600, ## in pixels
                             solidHeader = TRUE,
                             status = "primary",
-                            "foo"),
+                            plotOutput("bls.sinx")),
                         box(title = "Classification Plot",
                             width = 6, 
-                            height = 600,
                             solidHeader = TRUE,
+                            plotOutput("bls.classify"),
                             status = "primary")
                         )
             ),
@@ -40,13 +39,11 @@ dashboardPage(
                     fluidRow(
                         box(title = "sin(x) Plot",
                             width = 6, ## in columns
-                            height = 600, ## in pixels
                             solidHeader = TRUE,
                             status = "primary",
                             "bar"),
                         box(title = "Classification Plot",
                             width = 6, 
-                            height = 600,
                             solidHeader = TRUE,
                             status = "primary")
                         )

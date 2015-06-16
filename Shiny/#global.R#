@@ -1,5 +1,0 @@
-#### global.R
-#### This script takes care of global options that need run once
-library(shiny)
-library(shinydashboard)
-
