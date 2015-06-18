@@ -16,8 +16,8 @@ shinyServer(
         classify.y <- reactive(classify.dat()[,3])
         classify.x <- reactive(as.matrix(classify.dat()[,-3]))
         classify.xgrid1 <- reactive(seq(min(classify.x()[,1]), max(classify.x()[,1]), length = 100))
-        classify.xgrid2 <- reactive(seq(min(classify.x()[,2]), max(classify.x()[,2]),length = 100))
-        classify.n <- reactive(length(classify.xgrid1()))
+        classify.xgrid2 <- reactive(seq(min(classify.x()[,2]), max(classify.x()[,2]), length = 100))
+        classify.n <- reactive(length(classify.xgrid2()))
 
         ################################ Render Plots ################################
         #### Each plot is a function of the input state (sliders, tab we're in, etc)
@@ -44,7 +44,7 @@ shinyServer(
         knn.zgrid <- reactive({
             k <- input$k ## needs to be outside so fxn is reactive
                          ## shiny can't go down two levels of applies, apparently.
-            t(matrix(mcsapply(1:classify.n(), function(i){
+            matrix(mcsapply(1:classify.n(), function(i){
                                   sapply(1:classify.n(), function(j){
                                              knn(c(classify.xgrid1()[i],
                                                    classify.xgrid2()[j]),
@@ -52,7 +52,7 @@ shinyServer(
                                                  classify.y(),
                                                  k)
                                   })
-            }), classify.n(), classify.n()))
+            }), classify.n(), classify.n(), byrow = TRUE)
         })
             
         #### Render Regression Plots

@@ -19,7 +19,8 @@ knn <- function(x0, x, y, k){
 }
 
 #### KNN classifier implementation is slow.  Speed it up w/ multicore,
-#### but leave a core for shiny
+#### but leave cores for shiny
 n.cores <- detectCores() - 1
 #### unlist(mclapply) is ugly, create an mcsapply()
-mcsapply <- function(...) unlist(mclapply(..., mc.cores = n.cores))
+mcsapply <- function(...) unlist(mclapply(..., mc.preschedule = FALSE,
+                                          mc.cores = n.cores))
