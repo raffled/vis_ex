@@ -21,70 +21,73 @@ shinyServer(
 
         ################################ Render Plots ################################
         #### Each plot is a function of the input state (sliders, tab we're in, etc)
-        #### Everything gets saved to an "output" object to be read by UI.R
+        #### Everything gets saved to an "output" object to be read by
+        #### UI.R
 
-        #### Render BLS Plots
+        ################################ get predictions ################################
+        bls.ygrid <- reactive({
+            sapply(sinx.xgrid(), function(i) bls(i, sinx.x(), sinx.y()))
+        })
+        knn.ygrid <- reactive({
+            sapply(sinx.xgrid(), function(i) knn(i, sinx.x(), sinx.y(), input$k))
+        })
+        bls.zgrid <- reactive({
+            t(sapply(1:classify.n(), function(i){
+                         sapply(1:classify.n(), function(j){
+                                    bls(c(classify.xgrid1()[i],
+                                          classify.xgrid2()[j]),
+                                        classify.x(),
+                                        classify.y())
+                         })
+            }))
+        })
+        knn.zgrid <- reactive({
+            k <- input$k ## needs to be outside so fxn is reactive
+                         ## shiny can't go down two levels of applies, apparently.
+            t(matrix(mcsapply(1:classify.n(), function(i){
+                                  sapply(1:classify.n(), function(j){
+                                             knn(c(classify.xgrid1()[i],
+                                                   classify.xgrid2()[j]),
+                                                 classify.x(),
+                                                 classify.y(),
+                                                 k)
+                                  })
+            }), classify.n(), classify.n()))
+        })
+            
+        #### Render Regression Plots
         output$bls.sinx <- renderPlot({
-            x <- sinx.x()
-            y <- sinx.y()
-            xgrid <- sinx.xgrid()
-            n <- sinx.n()
-            ygrid <- sapply(xgrid, function(i) bls(i, x, y))
-            plot(x, y, pch = 16)
-            lines(xgrid, ygrid, col=c("red"))
-            lines(xgrid, sin(xgrid), col=c("blue"))
+            plot(sinx.x(), sinx.y(), pch = 16)
+            lines(sinx.xgrid(), bls.ygrid(), col=c("red"))
+            lines(sinx.xgrid(), sin(sinx.xgrid()), col=c("blue"))
         })
-        output$bls.classify <- renderPlot({
-            y <- classify.y()
-            x <- classify.x()
-            xgrid1 <- classify.xgrid1()
-            xgrid2 <- classify.xgrid2()
-            n <- classify.n()
-
-            zgrid <- t(sapply(1:n, function(i){
-                                  sapply(1:n, function(j){
-                                             bls(c(xgrid1[i], xgrid2[j]), x, y)
-                                  })
-                     }))
-            plot(x, col=c("orange","blue")[y+1], pch=16, xlab="x1", ylab="x2")
-            sapply(1:n, function(i){
-                       val <- as.numeric(zgrid[,i] >= 0.5) + 1
-                       points(xgrid1,rep(xgrid2[i],n), pch = ".", col = c("orange", "blue")[val])
-            })
-            contour(x = xgrid1, y = xgrid2, z = zgrid, levels = 0.5, add = TRUE, 
-                    drawlabels = FALSE)
-        })
-
-        #### KNN Plots
         output$knn.sinx <- renderPlot({
-            x <- sinx.x()
-            y <- sinx.y()
-            xgrid <- sinx.xgrid()
-            n <- sinx.n()
-            ygrid <- sapply(xgrid, function(i) knn(i, x, y, input$k))
-            plot(x, y, pch = 16)
-            lines(xgrid, ygrid, col=c("red"))
-            lines(xgrid, sin(xgrid), col=c("blue"))
+            plot(sinx.x(), sinx.y(), pch = 16)
+            lines(sinx.xgrid(), knn.ygrid(), col=c("red"))
+            lines(sinx.xgrid(), sin(sinx.xgrid()), col=c("blue"))
         })
-        output$knn.classify <- renderPlot({
-            y <- classify.y()
-            x <- classify.x()
-            xgrid1 <- classify.xgrid1()
-            xgrid2 <- classify.xgrid2()
-            n <- classify.n()
-            k <- input$k
-            zgrid <- t(matrix(mcsapply(1:n, function(i){
-                                  sapply(1:n, function(j){
-                                             knn(c(xgrid1[i], xgrid2[j]), x, y, k)
-                                  })
-                     }), n, n))
-            plot(x, col=c("orange","blue")[y+1], pch=16, xlab="x1", ylab="x2")
-            sapply(1:n, function(i){
-                       val <- as.numeric(zgrid[,i] >= 0.5) + 1
-                       points(xgrid1,rep(xgrid2[i],n), pch = ".", col = c("orange", "blue")[val])
+
+        #### Render Classification Plots  
+        output$bls.classify <- renderPlot({
+            plot(classify.x(), col=c("orange","blue")[classify.y()+1], pch=16, xlab="x1", ylab="x2")
+            sapply(1:classify.n(), function(i){
+                       val <- as.numeric(bls.zgrid()[,i] >= 0.5) + 1
+                       points(classify.xgrid1(), rep(classify.xgrid2()[i], classify.n()),
+                              pch = ".", col = c("orange", "blue")[val])
             })
-            contour(x = xgrid1, y = xgrid2, z = zgrid, levels = 0.5, add = TRUE, 
-                    drawlabels = FALSE)
+            contour(x = classify.xgrid1(), y = classify.xgrid2(), z = bls.zgrid(),
+                    levels = 0.5, add = TRUE, drawlabels = FALSE)
+        })
+        
+        output$knn.classify <- renderPlot({
+            plot(classify.x(), col=c("orange","blue")[classify.y()+1], pch=16, xlab="x1", ylab="x2")
+            sapply(1:classify.n(), function(i){
+                       val <- as.numeric(knn.zgrid()[,i] >= 0.5) + 1
+                       points(classify.xgrid1(), rep(classify.xgrid2()[i], classify.n()),
+                              pch = ".", col = c("orange", "blue")[val])
+            })
+            contour(x = classify.xgrid1(), y = classify.xgrid2(), z = knn.zgrid(),
+                    levels = 0.5, add = TRUE, drawlabels = FALSE)
         })
     }
 )

@@ -10,57 +10,55 @@ dashboardPage(
     dashboardSidebar(
         h3("Shiny Demo"),
         hr(),
-        sidebarMenu(id = "menu",
-                    menuItem("BLS", tabName = "bls", icon = icon("square")),
-                    menuItem("KNN", tabName = "knn", icon = icon("square"))
+        sidebarMenu(
+            menuItem("Regression", tabName = "sinx",
+                     icon = icon("square")),
+            menuItem("Classification", tabName = "class",
+                     icon = icon("square"))
         ),
-        #### If we're in the KNN tab, give a slider to set k
-        #### server.R has access through input$k, set by inputId
-        conditionalPanel(
-            condition = "input.menu == 'knn'",
-            sliderInput(inputId = "k",
-                        label = "K = ",
-                        min = 1,
-                        max = 100,
-                        value = 5)
-            )
+        hr(),
+        sliderInput(inputId = "k",
+                    label = "K = ",
+                    min = 1,
+                    max = 100,
+                    value = 5)
     ),
     #### Body controls what's active in the main part of the dash
     dashboardBody(
         #### Set up tab structure (corresponding to menu bar selection)
         tabItems(
             #### Tab for least squares
-            tabItem(tabName = "bls",
+            tabItem(tabName = "sinx",
                     #### Row w/ box for each plot
                     fluidRow(
-                        box(title = "sin(x) Plot",
+                        box(title = "BLS",
                             width = 6, ## in columns
                             solidHeader = TRUE,
                             status = "primary",
                             plotOutput("bls.sinx")),
-                        box(title = "Classification Plot",
-                            width = 6, 
-                            solidHeader = TRUE,
-                            plotOutput("bls.classify"),
-                            status = "primary")
-                        )
-            ),
-            #### Tab for KNN
-            tabItem(tabName = "knn",
-                    #### Row w/ box for each plot
-                    fluidRow(
-                        box(title = "sin(x) Plot",
+                        box(title = "KNN",
                             width = 6, ## in columns
                             solidHeader = TRUE,
                             status = "primary",
-                            plotOutput("knn.sinx")),
-                        box(title = "Classification Plot",
+                            plotOutput("knn.sinx"))
+                    ) ## close row
+            ), ## close Regression tab
+            #### Tab for KNN
+            tabItem(tabName = "class",
+                    #### Row w/ box for each plot
+                    fluidRow(
+                        box(title = "BLS",
+                            width = 6, 
+                            solidHeader = TRUE,
+                            plotOutput("bls.classify"),
+                            status = "primary"),
+                        box(title = "KNN",
                             width = 6, 
                             solidHeader = TRUE,
                             status = "primary",
                             plotOutput("knn.classify"))
-                        )
-            )
-        )
-    )
-)
+                   ) ## close row
+            ) ## Close CLassification tab
+        ) ## close tabItems
+    ) ## close body
+) ## close UI
