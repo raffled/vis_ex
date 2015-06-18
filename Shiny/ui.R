@@ -29,35 +29,45 @@ dashboardPage(
         tabItems(
             #### Tab for least squares
             tabItem(tabName = "sinx",
-                    #### Row w/ box for each plot
                     fluidRow(
-                        box(title = "BLS",
-                            width = 6, ## in columns
-                            solidHeader = TRUE,
-                            status = "primary",
-                            plotOutput("bls.sinx")),
-                        box(title = "KNN",
-                            width = 6, ## in columns
-                            solidHeader = TRUE,
-                            status = "primary",
-                            plotOutput("knn.sinx"))
-                    ) ## close row
+                        #### Column for BLS
+                        column(width = 5,
+                               box(title = "BLS",
+                                   solidHeader = TRUE,
+                                   width = NULL,
+                                   status = "info",
+                                   plotOutput("bls.sinx")),
+                               valueBoxOutput("bls.rsq", width = NULL)
+                        ),
+                        column(width = 5,
+                               box(title = "KNN",
+                                   width = NULL,
+                                   solidHeader = TRUE,
+                                   status = "success",
+                                   plotOutput("knn.sinx")),
+                               valueBoxOutput("knn.rsq", width = NULL)
+                        )
+                    )
             ), ## close Regression tab
             #### Tab for KNN
             tabItem(tabName = "class",
-                    #### Row w/ box for each plot
                     fluidRow(
-                        box(title = "BLS",
-                            width = 6, 
-                            solidHeader = TRUE,
-                            plotOutput("bls.classify"),
-                            status = "primary"),
-                        box(title = "KNN",
-                            width = 6, 
-                            solidHeader = TRUE,
-                            status = "primary",
-                            plotOutput("knn.classify"))
-                   ) ## close row
+                        #### Column for BLS
+                        column(width = 5,
+                               box(title = "BLS",
+                                   solidHeader = TRUE,
+                                   width = NULL,
+                                   status = "info",
+                                   plotOutput("bls.classify"))
+                         ),
+                        column(width = 5,
+                               box(title = "KNN",
+                                   width = NULL,
+                                   solidHeader = TRUE,
+                                   status = "success",
+                                   plotOutput("knn.classify"))
+                        )
+                    )
             ) ## Close CLassification tab
         ) ## close tabItems
     ) ## close body
