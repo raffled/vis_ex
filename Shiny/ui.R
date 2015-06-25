@@ -12,16 +12,19 @@ dashboardPage(
         hr(),
         sidebarMenu(
             menuItem("Regression", tabName = "sinx",
-                     icon = icon("square")),
+                     icon = icon("square")
+            ),
             menuItem("Classification", tabName = "class",
-                     icon = icon("square"))
+                     icon = icon("square")
+            )
         ),
         hr(),
         sliderInput(inputId = "k",
                     label = "K = ",
                     min = 1,
                     max = 100,
-                    value = 5)
+                    value = 5
+        )
     ),
     #### Body controls what's active in the main part of the dash
     dashboardBody(
@@ -36,7 +39,8 @@ dashboardPage(
                                    solidHeader = TRUE,
                                    width = NULL,
                                    status = "info",
-                                   plotOutput("bls.sinx")),
+                                   plotOutput("bls.sinx")
+                               ),
                                valueBoxOutput("bls.rsq", width = NULL)
                         ),
                         column(width = 5,
@@ -44,7 +48,8 @@ dashboardPage(
                                    width = NULL,
                                    solidHeader = TRUE,
                                    status = "success",
-                                   plotOutput("knn.sinx")),
+                                   plotOutput("knn.sinx")
+                               ),
                                valueBoxOutput("knn.rsq", width = NULL)
                         )
                     )
@@ -58,14 +63,16 @@ dashboardPage(
                                    solidHeader = TRUE,
                                    width = NULL,
                                    status = "info",
-                                   plotOutput("bls.classify"))
+                                   plotOutput("bls.classify")
+                               )
                          ),
                         column(width = 5,
                                box(title = "KNN",
                                    width = NULL,
                                    solidHeader = TRUE,
                                    status = "success",
-                                   plotOutput("knn.classify"))
+                                   plotOutput("knn.classify")
+                               )
                         )
                     )
             ) ## Close CLassification tab
